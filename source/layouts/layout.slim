@@ -1,0 +1,74 @@
+doctype html
+html
+  head
+    title= current_page.data.title || ""
+    script src="/javascripts/vendor/modernizr.js"
+    meta name="description" content=""
+    meta name="viewport" content="width=device-width, initial-scale=1"
+
+    /[if lt IE 9]
+    script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.2/html5shiv.js"
+
+    = stylesheet_link_tag "all", media: "all"
+    = stylesheet_link_tag "syntax"
+    = stylesheet_link_tag "jquery.tocify.css"
+    = stylesheet_link_tag "//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css"
+    = stylesheet_link_tag "http://fonts.googleapis.com/css?family=Raleway"
+    = stylesheet_link_tag "http://fonts.googleapis.com/css?family=Merriweather"
+
+  body
+    section#header
+      div.container
+        .row
+          .col-md-1
+          .col-md-10
+            h1 3DSecure.io MPI Documentation
+            p You can use our MPI service to facilitate 3-D Secure verifications. We expose a simple JSON interface.
+            /enrolled determines if a card is enrolled for 3D-Secure authentication or not. In case a card is enrolled, then mpirb returns the necessary parameters needed to continue the 3D-Secure check at the ACS (a service run by the issuing institution).
+            /check checks and validates the PARes response from the ACS.
+
+            /p 3D Secure is a collective term for the security standards Verified by VISA and MasterCard SecureCode which are developed by Visa and MasterCard, respectively.
+
+            /p When 3D Secure is used, an extra security measure is added to the payment process consisting of the entry of a password to identify the card holder to the card issuer. This step comes immediately after the customer has entered his or her card information.
+
+            /p 3D Secure only applies to international payment cards and cannot be used with Dankort payments.
+
+            /p The API is organized around REST and designed to have predictable and resource-oriented URLs.
+              The table below basically sums up what you can do:
+            div.features
+              dl.dl-horizontal
+                dt Determine if a card is enrolled for 3-D Secure authentication:
+                dd
+                  code POST https://mpi.3dsecure.io/enrolled
+                dt Checks and validate a PARes response provided by an ACS:
+                dd
+                  code POST https://mpi.3dsecure.io/check
+        .col-md-1
+    section#home-content
+      div.container
+        .row
+          .col-md-4
+            a href="#getting-started"
+              i.fa.fa-5x.fa-rocket
+              h1 Getting Started
+              p Sign up for an API key and read all about getting started using our API.
+          .col-md-4
+            a href="#examples"
+              i.fa.fa-5x.fa-code
+              h1 Examples
+              p Have a look at some examples and see how simple and powerful our API is.
+          .col-md-4
+            a href="#api-reference"
+              i.fa.fa-5x.fa-wrench
+              h1 API Reference
+              p Read our complete API reference and learn all about our different resources.
+    section#doc-content
+      div.container
+        .row
+          .col-md-2
+            div#toc.affix-top data-spy="affix" data-offset-top="650"
+          .col-md-8
+            = yield
+          .col-md-2
+          footer
+    = javascript_include_tag 'all'
