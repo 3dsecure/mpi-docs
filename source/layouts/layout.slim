@@ -23,18 +23,11 @@ html
           .col-md-1
           .col-md-10
             h1 3DSecure.io MPI Documentation
-            p You can use our MPI service to facilitate 3-D Secure verifications. We expose a simple JSON interface.
-            /enrolled determines if a card is enrolled for 3D-Secure authentication or not. In case a card is enrolled, then mpirb returns the necessary parameters needed to continue the 3D-Secure check at the ACS (a service run by the issuing institution).
-            /check checks and validates the PARes response from the ACS.
+            p 
+              ' You can use our MPI service to facilitate 
+              a> href="http://en.wikipedia.org/wiki/3-D_Secure" 3-D Secure
+              ' verifications. We expose a simple JSON interface.
 
-            /p 3D Secure is a collective term for the security standards Verified by VISA and MasterCard SecureCode which are developed by Visa and MasterCard, respectively.
-
-            /p When 3D Secure is used, an extra security measure is added to the payment process consisting of the entry of a password to identify the card holder to the card issuer. This step comes immediately after the customer has entered his or her card information.
-
-            /p 3D Secure only applies to international payment cards and cannot be used with Dankort payments.
-
-            /p The API is organized around REST and designed to have predictable and resource-oriented URLs.
-              The table below basically sums up what you can do:
             div.features
               dl.dl-horizontal
                 dt Determine if a card is enrolled for 3-D Secure authentication:
