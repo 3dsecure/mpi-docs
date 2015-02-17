@@ -103,14 +103,16 @@ Example response (snippet):
 
 ````json
 {
-    "currency" : "EUR",
-    "cavv" : "CAACBpiWlxgBQwhwGZaXAAAAAAA=",
-    "amount": "1101",
-    "cavv_algorithm" : "2",
-    "eci" : "6",
-    "order_id" : "00000000001234567890",
-    "valid": true,
-    "xid" : "MDAwMDAwMDAwMDEyMzQ1Njc4OTA="
+    "amount":"21601",
+    "currency":"DKK",
+    "cavv":"jI3JBkkaQ1p8CBAAABy0CHUAAAA=",
+    "cavv_algorithm":"3",
+    "eci":"2",
+    "merchant_id":"02000000000",
+    "last4":"1548",
+    "status":"Y",
+    "valid":true,
+    "xid":"MDAwMDAwMDAwMDEyMzQ2Njc4OTA="
 }
 ````
 
