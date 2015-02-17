@@ -14,6 +14,7 @@ API keys comes with many privileges so keep them secret.
 
 ````
 https://mpi.3dsecure.io      # live accounts
+https://mpi.test.3dsecure.io # test accounts
 ````
 
 
