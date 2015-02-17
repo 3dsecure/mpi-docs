@@ -7,7 +7,7 @@ title: 3DSecure.io MPI API Documentation
 You need an API key to interact with our API. Sign-up <a href="http://www.3dsecure.io/">here</a>.
 
 <p class="alert alert-danger">
-API keys come with many privileges so keep them secret.
+The API key is what you pay for so keep it secret.
 </p>
 
 ## API endpoint
@@ -54,8 +54,8 @@ Number  Text
 
 This method is used to verify if a given card is enrolled for 3-D Secure
 authentication. The important responses from this method are a PAReq (Payment
-Authentication Request) and url, which is parsed onto the ACS (Access Control
-Server) of the issuing bank (or other ACS provider) via the user's browser.
+Authentication Request) and URL, which is passed onto the ACS (Access Control
+Server) of the issuing bank (or other ACS provider) via the cardholders browser.
 
 The following will check 3-D Secure for a given card:
 
