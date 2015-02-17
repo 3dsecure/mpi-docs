@@ -40,10 +40,10 @@ Responses are in JSON format.
 HTTP response codes are used to indicate API response status:
 
 ````
-Number  Text                 
-200     OK                   
-400     Bad Request          
-401     Unauthorized         
+Number  Text
+200     OK
+400     Bad Request
+401     Unauthorized
 500     Internal Server Error
 ````
 
@@ -191,7 +191,7 @@ POST https://mpi.3dsecure.io/check
 
 ## Test card numbers
 
-Not available yet..
+Not available yet.
 
 [JSON-HAL]: http://tools.ietf.org/html/draft-kelly-json-hal "IETF HAL draft"
 [HATEOAS]: http://en.wikipedia.org/wiki/HATEOAS
