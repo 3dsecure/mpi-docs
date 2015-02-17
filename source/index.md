@@ -148,7 +148,7 @@ POST https://mpi.3dsecure.io/enrolled
   <dt>merchant[country]</dt>
   <dd>[A-Z]{2} <br /> ISO 3166-1 2-letter country code</dd>
   <dt>merchant[id]</dt>
-  <dd>[A-Z0-9/-]{15,24} <br /> Merchant account ID or Card Acceptor ID provided by the acquiring bank. <br /><code>The Merchant ID must be the value registered to Visa and MasterCard</code>
+  <dd>[[:alnum:]]{1,15}(-[[:alnum:]]{1,8}|) <br /> Merchant account ID or Card Acceptor ID provided by the acquiring bank. <br /><code>The Merchant ID must be the value registered to Visa and MasterCard</code>
   <dt>merchant[name]</dt>
   <dd>[:print:]{1,25} <br /> Text that will be shown to the cardholder during authentication at the ACS.</dd>
   <dt>merchant[url]</dt>
