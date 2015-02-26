@@ -190,6 +190,5 @@ POST https://mpi.3dsecure.io/check
 
 Not available yet..
 
-[JSON-HAL]: http://tools.ietf.org/html/draft-kelly-json-hal "IETF HAL draft"
-[HATEOAS]: http://en.wikipedia.org/wiki/HATEOAS
+[3-D_Secure]: http://en.wikipedia.org/wiki/3-D_Secure
 [Tokenization]: http://en.wikipedia.org/wiki/Tokenization_(data_security)
