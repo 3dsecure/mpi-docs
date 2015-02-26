@@ -7,7 +7,7 @@ title: 3DSecure.io MPI API Documentation
 You need an API key to interact with our API. Sign-up <a href="http://www.3dsecure.io/">here</a>.
 
 <p class="alert alert-danger">
-API keys comes with many privileges so keep them secret.
+The API key is what you pay for so keep it secret.
 </p>
 
 ## API endpoint
@@ -40,10 +40,10 @@ Responses are in JSON format.
 HTTP response codes are used to indicate API response status:
 
 ````
-Number  Text                 
-200     OK                   
-400     Bad Request          
-401     Unauthorized         
+Number  Text
+200     OK
+400     Bad Request
+401     Unauthorized
 500     Internal Server Error
 ````
 
@@ -53,9 +53,9 @@ Number  Text
 ## Get enrollment status
 
 This method is used to verify if a given card is enrolled for 3-D Secure
-authentication. The important responses from this method is a PAReq (Payment
-Authentication Request) and url, which is parsed onto the ACS (Access Control
-Server) of the issuing bank (or other ACS provider) via the user's browser.
+authentication. The important responses from this method are a PAReq (Payment
+Authentication Request) and URL, which is passed onto the ACS (Access Control
+Server) of the issuing bank (or other ACS provider) via the cardholders browser.
 
 The following will check 3-D Secure for a given card:
 
@@ -96,21 +96,23 @@ This method is used to validate the PARes response from the ACS.
 ````shell
 curl -X POST https://mpi.3dsecure.io/check \
      -u <your-api-key>: \
-     -F "pares=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"
+     --data-urlencode "pares=eJzVWFmvo0iyfu9f0ep5tLrYsd1yHSmTzdgGzGrgjX0Hm8Usv37wObXdutWjufdlNJYsJ0FEZCwZX4TzYKRtFLF6FAxt9HaQoq7zkuj3LPz8R7TzQo+gsO2Wxrw9hRIxvo8IL45wP6LokP7j7XAFWtS9M1dd8omk9/h++6nLkjoK17fPqO2ypn7DPqGf8APy9XHdpA1Sr+7fDl7wgKL8RuE0tcUOyJfHQxW1IvuG4ujXzwH5IB2Q77LX4bXqVqOnLHyTWDB+/3KztKiYnAekYoDPB+TFcQi9PnrDUYxCcYz+HUP/wrZ/keuu7/TD/aUOVM2w6l7fo+uLH0mHNT5tVAfzqmF3QL49HaLp3tTRS+iAfFsfkO/W3b36Df3hg1HkquBFPRj226HPqv9lFU4ckHf6oeu9fujenAPyZXUIvOfzLReJEywKT8XuOwYCAOCMMkdzXby8fWc5REG2hnA1av19lwJl0rRZn1ZvxAfPd8IBeZmCvKfz7aCvCVw3a6Pfp6qsu89/pH1//wtBxnH8NBKfmjZBXqlB0D2yMoRrvv/xx4dUFIp13PyfxBivbuos8Mps8fr1eEhRnzbh799s+5UaQ3tpwhCNY/5cVf0ZYGT954uCEhi16kR+rfQHz/6dXX42tu28P7vUw14b/KTo7aBFcfQ6EdHvpiZ+/uMfv6oHNkuirv//bP112x81fNVneeUQvdE7CQ8s9DwkEKSL2wG7xLsix5pd8Pmr3AfnAflm6xdHPrL2Q3Q+GFuDOz1u5zM/ispzf+36gDLnRKI77qTmieF149BSqZ2YzXSRK5//LS43ridB10vJJ1/1t9GyWGjcAmc3Hh9jgz1KQdzvdhk/DlZZBc/fMKokWDcaSPrKNVGHasn+0tv60wmOAm/yiL6Zbs5SKpbhTTFz7H4b8cDmZFzemMat5Kh9vhmUEzFv7Fj8/NsPWfni6TmaPzyzKXTPer33sWKits/i9XisdS+JIkvkDANW2AOjCEEiqkIdc83RZk/QPz9F+Wh0Ju7lQIZJ8UiLTNiPKASqyQOWgWnOXSRQCAAzOZhKjGVJ09EAPkxkC4LG4DksDQitDAo5DSo1sfD97Asa4d20UtLJ8QIc1lLVCzdbsmPLqGufWMc+FSIfPoNqKkK8LFwdGu5NxoLKYn1cK0UuLP0MzJKejKfkXZ7lpr1qFmpimFJi4lYe2qdSxfcv2VNAyJhri4lJWJnIyVCCpM0a3CIZ3CQt3CizYJKw5kUjfqKNNvs//TNRc+IMcP3qH8PLvFrxg4dbg6QFI69+8WekYFDJz5CVudWeOazK3DW4VIK7d12rdsdELca48UsoWLOK87PLfPMzf/kpiUIsAVRg9Iegiz7Bqtwr7gCQgvyKfaaeYaKyykguYz/g1zK5HemIskRlDUES171nM3g8kaRQTrSy4h18PnfPW1IuU1cH/nZ4QLdnjEzd9rlZuw/RNYoxCx7C1hNFb58COctEZGYxJKRoMkgxuczFiUrkB9aF4o5rzlN9uQJCcjjkLmZEz5ZOkm/6IEjQhTj2Ry0pt7wfoxKZlvd5W6oiC1QAG/KISuJxWv2rXnE86hKXuOSYuEOaOF6RONKYOGBiFnD6iLNjgNIyJA0dhfE9vmdu0v7+vBjcIDHje5yZSSp/irHtE6fOPYZ3VzB/PitH90YmUs5lEgO+5sk1+RMnchgr8nLpENbsmvLzXbbaP0MGsqojqirBwZhtlmN6vhP3agmOLe1+sf+oSRzIAZDWxK06Q3bkIDKq3Fpvx4QF7QcP4E4syBKwm9f+/dPZfEB2EUfJcKaVPksGQF88t1/VJFAYsKq+HUvP7j2Vb6bM32w5AidVe00UHtFx7pL+Fcq6w5CPwkRZxVToG4epHMPuu7jjOgA1+Yy0znkMnluujVnUscic3G2ZsJc3RnmFIkkF/fYh9Y4RYuxYpddpHiwKlve+b5+WgQW3/KIydbOOPI9gM16R5F5v6OOJpQxyy1eNWW9PIPcd+hzrJgjOF9naVNMRS5mECjnxVADNpKL7zrtdC5gpGmdEvI46l7zRcBe7YjYa9ZE5We1VYqPwZEl29DD0c0EZFEx0YR+ckkUZ1DIZ59zaYOnuyDeS2WD7XRYAJy5OFCMPVgBtIcOE042RKT2mlnwvTwxKgejGaNsqmJwhXWyTySVeoHBpm3xee8nPCPpLSF2WFVLb6CukakCh0+JB2yA8PwElSiAnuD0ljevZOZ0bV0yfgbymjYcq+O86+gaI+BGdpBzgUi6O67hJSgv0VtosGz/SeG8tdyCp3ch8QKTAjSfLXLhQgt2Hvalk/gt7p0sOuo+YdMbJ/Pu28rOt2grNIitOYg6SD3nJECyoawyU1fmn1sKfnj6hJirKjUmyxuKX8CtCdgSv92fQrPlV2XvPVB3tiThu7HWDRou1VnT3itLG2Tfhvam2LgbXUURVAYf0EmUqPWEcpbBNjQ3uiUW+N9A7IChxliVGFth+E+XpvO2P4Yi1dMTayNl2jj7Jl1HloAQ7am2h6kfksnGHSKdCJr5IRIV7ywTtvrVsNpQjP077XR/ctMsZVwb6mbNLKC5DPdw0ly40VqWbALvoloLDKeMV1Dg34+mKSNvHTTOQU1f5tCEk6LOqVGGvcvfKqhRXjCZrGpyZaOttwvkW1j+JgvQE1NSlO24/EDsiH9FGbLcd/9AoWiDnc7To1sVcVE+ESBhFTLG/mbiB2tVaiZzDQrWJgkanMY2sc0phq2WshHlqS5BI62gv5Gq+Zgy8t82QG9W1eBwI4t0L5kb21f419ArUI/JKBEg4QYLoB8wm6g1C9cEbwWSxCjJMIpbeeZ6wdN3gJWH4F/CZsopKLaaNj3C2nijzKDwi8usKoSdtUVX/FpVLHbGmbIVBX2N1eurx6xkbBGurQQEIQ5GEYPDHsYYpi/Ohn8KjYfn3y9WZoB9KYI6YXbR4K/y0tgLAE3V8Ib2WmGTyGVs99DLznpA3OzLgBih6HQnNxqX4BSXxkNXBLY79MCZKcmlN6rI05Z6Y7Wk94o9E7AxCFTedJhFJggjh2OxQ1lTxWIvjTgiBecQZZHfZIeNxw+2P3T2X2MIu3Sa9iiI69ec0FK+3xVcgvXaGS4lfi1A4VqeAtOwpVkYOl09AnarGu2qsIyQKbz2LxennySomO7LBVe53pqYReXx7Oi0UjjhLAZIE/b8Nn1zCrvCJZ98m0r/prr+cSBP2PzmRiqMIvk6k5d9NpLqP79EfJtG14zvzCqHUCpeTzL8mURF7pxlfaFaztgXnP9kWGolxvraF+O/agm7LS3iz5pWOOdmrPax5XGPyU5tbqxKwK3xewSvPasOsawhkL4JJnBtnkS+77RBJxiLitTMCvwmOY6E+wh3sxPnku2GBY9zmOT/2XGpjsthkIL1u179fM5I2nU3TYZvHrT93d/fila0l0InjhxDPcb3dLVBTa8k9n8uBHZ0ngtN0XWswmgXnRvDjbA27CwYYRw1QEjBFtEG3sogAd6fYqt5EfsNxgqlQOIps6QYLOI1Siv1Ry9D8xO44msx3IdcTtLQOwSfvrGZsrqflbIwkgM68uJg1lSiSsW08+s0kc4rSNAzaBoJcM3dRt6VbjcuVe8TUFZV7PBfdnbrwBLJsJCJzWi9M94PrDWUkP077y/XcIh7Ps36Ewid6vfhPW6n5+6hMz5PC3sx8hcmRA8BT4NZgIJ1//HN5TaQMu7b5FTZXyPzVZAphDsJ3XpXk+EQ1RwO0tUakGrYRc2yYpP7RXGGF59tuTLzgXV4cdVgvDKzPAkwfOkyW/656TFIObNdu394DiD52bJGMzDUwiOJXWPOlVRDlaXCsMJsxjLuYMYwvQ+aTydXwCza0LpA7N92EziYbLJHdGKaSQy7YozF11nL/HpH3rFTWRNRX2RTuGeEypb5B586Ad1oLnQWLYvmiD55x6u+ne8MoBYbUI33b1CfuNrO2GTDIbD263s3CQBFoIMVnk+QYaoEyd3EZIcbmWsLLTTI+i4A1n6SDRz1SI/JDPMNlHgVdKfomNyoPLY5+ASL6ntMZTRn3kUu4+zxaJYU2UiWfnzYrS0vdAoHW90O3UY5s3tRKWVXzrVInOzQxaRnD83LNj/FYbtYxA64WtsMx5wK5m7ZXvDWNCoE9od9u2JncWbEsp5aH3ILecIUT01qEm5c02P+6VSDf7zGQb3cb32893q9H3+9vXxd6P97r/hNAOzNG"
 ````
 
 Example response (snippet):
 
 ````json
 {
-    "currency" : "EUR",
-    "cavv" : "CAACBpiWlxgBQwhwGZaXAAAAAAA=",
-    "amount": "1101",
-    "cavv_algorithm" : "2",
-    "eci" : "6",
-    "order_id" : "00000000001234567890",
-    "valid": true,
-    "xid" : "MDAwMDAwMDAwMDEyMzQ1Njc4OTA="
+    "amount":"21601",
+    "currency":"DKK",
+    "cavv":"jI3JBkkaQ1p8CBAAABy0CHUAAAA=",
+    "cavv_algorithm":"3",
+    "eci":"2",
+    "merchant_id":"02000000000",
+    "last4":"1548",
+    "status":"Y",
+    "valid":true,
+    "xid":"MDAwMDAwMDAwMDEyMzQ2Njc4OTA="
 }
 ````
 
@@ -118,7 +120,7 @@ Example response (snippet):
 
 ### Enrolled
 
-This method is used to verify if a given card is enrolled for 3-D Secure authentication. The important responses from this method is a PAReq (Payment Authentication Request) and url, which is parsed onto the ACS (Access Control Server) of the issuing bank (or other ACS provider) via the user’s browser.
+This method is used to verify if a given card is enrolled for 3-D Secure authentication. The important responses from this method are a PAReq (Payment Authentication Request) and url, which is parsed onto the ACS (Access Control Server) of the issuing bank (or other ACS provider) via the user's browser.
 
 ````
 POST https://mpi.3dsecure.io/enrolled
@@ -144,9 +146,9 @@ POST https://mpi.3dsecure.io/enrolled
   <dt>merchant[acquirer_bin]</dt>
   <dd>[0-9]{6,11} <br /> Acquiring institution identification code. <br /> Typically this is a 6-digit BIN assigned to the acquirer by Visa or MasterCard.</dt>
   <dt>merchant[country]</dt>
-  <dd>[A-Z]{2} <br /> ISO 3166-1 2-letter country codes</dd>
+  <dd>[A-Z]{2} <br /> ISO 3166-1 2-letter country code</dd>
   <dt>merchant[id]</dt>
-  <dd>[A-Z0-9/-]{15,24} <br /> Merchant account ID or Card Acceptor ID provided by the acquiring bank. <br /><code>The Merchant ID must be the value registered to Visa and MasterCard</code>
+  <dd>[[:alnum:]]{1,15}(-[[:alnum:]]{1,8}|) <br /> Merchant account ID or Card Acceptor ID provided by the acquiring bank. <br /><code>The Merchant ID must be the value registered to Visa and MasterCard</code>
   <dt>merchant[name]</dt>
   <dd>[:print:]{1,25} <br /> Text that will be shown to the cardholder during authentication at the ACS.</dd>
   <dt>merchant[url]</dt>
@@ -173,6 +175,9 @@ POST https://mpi.3dsecure.io/check
   <dd>[:base64:]  <br /> Base64 encoded PARes</dd>
 </dl>
 
+<p class="alert alert-info">
+<b>Notice:</b> The ```pares``` should be url-encoded to garantee that valid base64 reaches the endpoint. For curl use ```--data-urlencode```.
+</p>
 
 ## Response status codes
 
@@ -188,7 +193,7 @@ POST https://mpi.3dsecure.io/check
 
 ## Test card numbers
 
-Not available yet..
+Not available yet.
 
 [3-D_Secure]: http://en.wikipedia.org/wiki/3-D_Secure
 [Tokenization]: http://en.wikipedia.org/wiki/Tokenization_(data_security)
