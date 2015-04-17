@@ -66,8 +66,8 @@ curl -X POST https://mpi.3dsecure.io/enrolled \
      -d "currency=EUR"  \
      -d "order_id=1234567890" \
      -d "card[number]=4111111111111111" \
-     -d "card[month]=12" \
-     -d "card[year]=2020" \
+     -d "card[expire_month]=12" \
+     -d "card[expire_year]=2020" \
      -d "merchant[id]=123456789012345" \
      -d "merchant[name]=Best Merchant Inc" \
      -d "merchant[acquirer_bin]=411111" \
