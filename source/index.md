@@ -14,6 +14,7 @@ The API key is what you pay for so keep it secret.
 
 ````
 https://mpi.3dsecure.io      # live accounts
+https://mpi.test.3dsecure.io # test accounts
 ````
 
 
