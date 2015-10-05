@@ -49,6 +49,78 @@ Number  Text
 ````
 
 
+# 3DS Secure Flow
+
+  The goal is to verify that the customer is enrolled in a card authentication program and to create the authentication request message (PAReq) for enrolled cards. The enrollment check is shown in Steps 1 to 2; the authentication is shown in Steps 3 to 6.
+
+  1. To verify that the customer is enrolled in one of the card authentication programs, please use `/enrolled`
+  2. 3DSecure contacts the appropriate Directory Server for the card type and respond with "payer authentication request" (`pareq`) value defined in 
+  <a data-toc='Getenrollmentstatus'>here</a>
+
+  3. If the card is enrolled, you send the `pareq` message to the ACS URL (`acs_url`) of the card- issuing bank to request authentication.
+  4. The customer’s web browser displays the card-issuing bank’s authentication dialog box where the customer enters their password for the card.
+  5. The card-issuing bank replies to your system with a `PARes` message that contains the results of the authentication.
+  6. You verify that the signature is valid by calling `/check` with `pares` value.
+
+## Checking Enrollment
+  
+  To verify that the card is enrolled in a card authentication program, you should use `/enrolled` endpoint defined <a data-toc='Getenrollmentstatus'>here</a>. Afterwards you should intercept reply as:
+
+#### Enrolled Cards
+
+You receive `enrolled = 'Y'` if the customer’s card is enrolled in a payer authentication program:
+
+```
+  {
+      "acs_url":"https://secure5.arcot.com/acspage/cap?RID=35325&VAA=B",
+      "pareq":"<pareq value>",
+      "enrolled":"Y",
+      ...
+  }
+```
+
+#### Cards Not Enrolled
+    
+You receive `enrolled != 'Y'` in the following cases:
+
+* if the account number is not enrolled in a payer authentication program, you will get `enrolled = 'N'`
+
+* If 3ds authentication is not supported by the card type, you will get `enrolled = 'U'`
+
+
+## Authenticating Enrolled Cards
+
+When you have verified that a customer’s card is enrolled in a card authentication program, you must redirect the customer to the URL of the card-issuing bank’s Access Control Server (`acs_url`) by using an HTTP POST request web form that contains the `PAReq` data, the Termination URL (`TermURL`), and merchant data (`MD`).
+
+#### 1. Creating the HTTP POST Form
+
+```html
+<form action="<acs_url>" method="post">
+  <input type="hidden" name="PaReq" value="<pareq>" />
+  <input type="hidden" name="TermUrl" value="<term_url>" />
+  <input type="hidden" name="MD" value="<xid>" />
+</form>
+```
+You should replace `acs_url`, `term_url`, `pareq` and `xid` variable with appropiate values defined as:
+
+| Name | Value | Description |
+|:--------|:--------|---------|
+| acl_url | http url string | `acs_url` value from `/enrolled` response |
+| pareq | encoded string | `pareq` value from `/enrolled` response |
+| term_url | http url string |  Termination URL on a merchant's web site where the card-issuing bank posts the payer authentication response (PARes) message |
+| xid | string | Merchant-defined Data. We recommend you to use order number for the transaction. |
+
+This page typically includes JavaScript that automatically posts the form and should be implemented by merchant.
+
+#### 2. Receiving the PARes Message from the Card-Issuing Bank
+
+The card-issuing bank sends a PARes message to your TermURL in response to the PAReq data that you sent with the web form. The PARes message is sent by using an HTTP POST request and contains the result of the authentication you requested. 
+
+You must verify the signature and validity of PARes using `/check` endpoint as defined <a data-toc="CheckPARes">here</a>. 
+
+#### 3. Redirecting Customers to Pass or Fail Message Page
+After authentication check (`/check`) is completed, you can simply redirect the customer to a page containing a success or failure message. 
+
 # Examples
 
 ## Get enrollment status
@@ -82,8 +154,7 @@ Example response (snippet):
 ````json
 {
     "acs_url":"https://secure5.arcot.com/acspage/cap?RID=35325&VAA=B",
-    "pareq_value":"eNpdU8tymzAU3ecrvMumYz1AgD2yZnDsTpMZx06TRdudLK5skhiIgNjust/Tr+qXVMIm4DDDoHvuOdKZexB/2hqA2SOo2oC4Ggz4AspSbmCQJpPrSELAZKApSOyFkWYaY+brJAq0pzTQa6ewmlX8Hd4aRZDoKMIs8WXiK2/NvIAFDPwwoRrCkV6fFVbzDqZM80yQIR5SjtqybRcyE4xFPmUhoZiGhPkRRw5tGQswaiuzqgUsJNXb9PZeMBpYFUfnsuvvwNzOBKa4fTg6QR0lkzsQ84PcFa/AUVN1TZXXWWWOgmLrpS26dm1exbaqijFC+/1+CKddhrnZII5cs7WOPnvnq9oBZf+wQ5qIxSzed+/8uPj9QO6flb98iiccOUbHT2QF1hlhmODRgARj6o0Z46jBezPaOd/i35+/hH7x7ATOQMconJf4hBLqKH2kN43aGMjUUYxCN4626ghwKPIMrMbm+7HuGYZSCevPfT4m83kQ/ObbRcCqsnHls7V++fVAHoPlnb/9eVMuVz+m8fzrNN5MXOwN6cJHaoMiETkZSbvUOGr3t0e7v7i5A+h8CcQVR5cX5D/FxN2u",
-    "account_id":"oDbfkZQ1S6OJ4hYCsOPXBAEFBAg=",
+    "pareq":"eNpdU8tymzAU3ecrvMumYz1AgD2yZnDsTpMZx06TRdudLK5skhiIgNjust/Tr+qXVMIm4DDDoHvuOdKZexB/2hqA2SOo2oC4Ggz4AspSbmCQJpPrSELAZKApSOyFkWYaY+brJAq0pzTQa6ewmlX8Hd4aRZDoKMIs8WXiK2/NvIAFDPwwoRrCkV6fFVbzDqZM80yQIR5SjtqybRcyE4xFPmUhoZiGhPkRRw5tGQswaiuzqgUsJNXb9PZeMBpYFUfnsuvvwNzOBKa4fTg6QR0lkzsQ84PcFa/AUVN1TZXXWWWOgmLrpS26dm1exbaqijFC+/1+CKddhrnZII5cs7WOPnvnq9oBZf+wQ5qIxSzed+/8uPj9QO6flb98iiccOUbHT2QF1hlhmODRgARj6o0Z46jBezPaOd/i35+/hH7x7ATOQMconJf4hBLqKH2kN43aGMjUUYxCN4626ghwKPIMrMbm+7HuGYZSCevPfT4m83kQ/ObbRcCqsnHls7V++fVAHoPlnb/9eVMuVz+m8fzrNN5MXOwN6cJHaoMiETkZSbvUOGr3t0e7v7i5A+h8CcQVR5cX5D/FxN2u",
     "enrolled":"Y",
     "eci":"2",
     "error":null
@@ -112,7 +183,6 @@ Example response (snippet):
     "merchant_id":"02000000000",
     "last4":"1548",
     "status":"Y",
-    "valid":true,
     "xid":"MDAwMDAwMDAwMDEyMzQ2Njc4OTA="
 }
 ````

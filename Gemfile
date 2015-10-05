@@ -10,6 +10,6 @@ gem 'redcarpet', '>=3.2.2'
 
 gem 'slim'
 gem 'sass'
-gem 'bootstrap-sass'
+gem 'bootstrap-sass', require: false
 
 gem 'execjs'

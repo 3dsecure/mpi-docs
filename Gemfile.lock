@@ -257,3 +257,6 @@ DEPENDENCIES
   redcarpet (>= 3.2.2)
   sass
   slim
+
+BUNDLED WITH
+   1.10.6
