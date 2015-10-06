@@ -35,6 +35,10 @@ You will get this response when you provide an invalid API key:
 HTTP/1.1 401 Not Authorized
 ````
 
+## Request format
+
+You can use URL-encoded (`application/x-www-form-urlencoded`) or JSON (`application/json`) content-types for POSTing data to our api endpoints. We support both of them.
+
 ## Response format
 Responses are in JSON format.
 
@@ -197,7 +201,7 @@ This method is used to verify if a given card is enrolled for 3-D Secure authent
 POST https://mpi.3dsecure.io/enrolled
 ````
 
-#### Parameters
+#### Request Parameters
 
 <dl class="dl-horizontal">
   <dt>amount</dt>
@@ -230,6 +234,28 @@ POST https://mpi.3dsecure.io/enrolled
 <b>Notice:</b> Getting the correct Acquirer BIN number and the Merchant ID from the acquiring bank is always a hassle the first time.
 </p>
 
+#### Response Parameters
+
+<dl class="dl-horizontal">
+  <dt>acs_url</dt>
+  <dd>[:valid_url:] <br> The URL of the Access Control Server of the card-issuing bank. This is where you must send the PAReq so that the customer can be authenticated. </dd>
+  <dt> pareq </dt>
+  <dd> [:base64:] <br> acronym for "Payer Authentication Request". It is digitally signed base64-encoded payer authentication request message,that a merchant sends to the card-issuing bank. Send this data without alteration or decoding. </dd>
+  <dt> enrolled </dt>
+  <dd> Y|N|U
+  <br> 3dSecure transaction type used for verifying whether a card is enrolled in the SecureCode or Verified by Visa service. This field can contain one of these values:
+    <ul> 
+     <li> Y: Authentication available. </li>
+     <li> N: Cardholder not participating. </li>
+     <li> U: Unable to authenticate regardless of the reason. </li>
+    </ul>
+  </dd>
+  <dt> eci </dt>
+  <dd> [0..7] <br> acronym for Electronic Commerce Indicator, defined in <a data-toc='Responsestatuscodes'>here</a> </dd>
+  <dt> error </dt>
+  <dd> [:print:]{1,500} <br> error message returned by card directories</dd>
+</dl>
+
 
 ### Check
 
@@ -239,7 +265,7 @@ This method is used to validate the PARes response from the ACS.
 POST https://mpi.3dsecure.io/check
 ````
 
-#### Parameters
+#### Request Parameters
 
 <dl class="dl-horizontal">
   <dt>pares</dt>
@@ -249,6 +275,44 @@ POST https://mpi.3dsecure.io/check
 <p class="alert alert-info">
 <b>Notice:</b> The ```pares``` should be url-encoded to garantee that valid base64 reaches the endpoint. For curl use ```--data-urlencode```.
 </p>
+
+#### Response Parameters
+
+<dl class='dl-horizontal'>
+  <dt> amount </dt>
+  <dd> [0-9]{1,11} <br> Amount in minor units of given currency (e.g. cents if in Euro). </dd>
+  <dt> currency </dt>
+  <dd> [A-Z]{3} <br> ISO 4217 3-letter currency code.</dd>
+
+  <dt> cavv </dt>
+  <dd> [:base64] <br> acronym for Cardholder Authentication Verification Value. A base64-encoded string sent back with Verified by Visa-enrolled cards that specifically identifies the transaction with the issuing bank and Visa. </dd>
+
+  <dt> cavv_algorithm </dt>
+  <dd> [1-9] <br> A one-digit reply passed back when the PARes status is a Y or an A. If your processor is ATOS, this must be passed in the authorization, if available. </dd>
+
+  <dt> eci </dt>
+  <dd> [0..7] <br> Electronic commerce indicator returned in the customer authentication reply defined <a data-toc='Responsestatuscodes'> here </a> </dd>
+
+  <dt> merchant_id </dt>
+  <dd> Identifier provided by your acquirer; used to log in to the ACS URL. </dd>
+
+  <dt> last4 </dt>
+  <dd> [\d]{4} <br> Customer’s masked account number.</dd>
+
+  <dt> status </dt>
+  <dd> Y|A|N|U <br> 
+    Result of the validation check, This field can contain one of these values: 
+    <ul>
+      <li> Y: Customer was successfully authenticated. </li>
+      <li> N: Customer failed or cancelled authentication. Transaction denied. </li>
+      <li> U: Authenticate not completed regardless of the reason. </li>
+      <li> A: Proof of authentication attempt was generated.</li>
+    </ul>
+  </dd>
+
+  <dt> xid </dt>
+  <dd> XID value returned in the customer authentication reply ( given in HTTP Form <a data-toc='AuthenticatingEnrolledCards'> at </a>) </dd>
+</dl>
 
 ## Response status codes
 
