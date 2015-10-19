@@ -8,6 +8,8 @@ gem 'middleman-s3_sync'
 
 gem 'redcarpet', '>=3.2.2'
 
+gem 'html-proofer', ">=1.6.0"
+
 gem 'slim'
 gem 'sass'
 gem 'bootstrap-sass'
