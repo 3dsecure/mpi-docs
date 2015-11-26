@@ -129,11 +129,11 @@ POST https://mpi.3dsecure.io/enrolled
 
 <dl class="dl-horizontal">
   <dt>amount</dt>
-  <dd>[0-9]{1,11} <br /> Amount in minor units of given currency (e.g. cents if in Euro).</dd>
+  <dd>[0-9]{1,12} <br /> Amount in minor units of given currency (e.g. cents if in Euro).</dd>
   <dt>currency</dt>
   <dd>[A-Z]{3} <br /> ISO 4217 3-letter currency code.</dd>
   <dt>order_id</dt>
-  <dd>[:print:]{1,125} <br /> Order ID or other unique transaction identifier</dd>
+  <dd>[:print:]{1,20} <br /> Order ID or other unique transaction identifier</dd>
   <dt>cardholder_ip</dt>
   <dd>[0-9\.a-fA-F:]{3,39} <br /> Cardholder's IP address (v4 or v6).</dd>
   <dt>card[number]</dt>
@@ -147,11 +147,11 @@ POST https://mpi.3dsecure.io/enrolled
   <dt>merchant[country]</dt>
   <dd>[A-Z]{2} <br /> ISO 3166-1 2-letter country code</dd>
   <dt>merchant[id]</dt>
-  <dd>[[:alnum:]]{1,15}(-[[:alnum:]]{1,8}|) <br /> Merchant account ID or Card Acceptor ID provided by the acquiring bank. <br /><code>The Merchant ID must be the value registered to Visa and MasterCard</code>
+  <dd>[:print:]{1,24} <br /> Merchant account ID or Card Acceptor ID provided by the acquiring bank. <br /><code>The Merchant ID must be the value registered to Visa and MasterCard</code>
   <dt>merchant[name]</dt>
   <dd>[:print:]{1,25} <br /> Text that will be shown to the cardholder during authentication at the ACS.</dd>
   <dt>merchant[url]</dt>
-  <dd>[:valid_url:] <br /> Valid URL, E.g. http://www.example.org/</dd>
+  <dd>http[s]://[:print:] <br /> Valid URL, E.g. http://www.example.org/</dd>
 </dl>
 
 <p class="alert alert-info">
