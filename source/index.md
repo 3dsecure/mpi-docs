@@ -151,7 +151,7 @@ POST https://mpi.3dsecure.io/enrolled
   <dt>merchant[name]</dt>
   <dd>[:print:]{1,25} <br /> Text that will be shown to the cardholder during authentication at the ACS.</dd>
   <dt>merchant[url]</dt>
-  <dd>http[s]://[:print:] <br /> Valid URL, E.g. http://www.example.org/</dd>
+  <dd>http[s]://[:print:]{1,2048} <br /> Valid URL, E.g. http://www.example.org/</dd>
 </dl>
 
 <p class="alert alert-info">
