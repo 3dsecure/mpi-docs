@@ -12,6 +12,6 @@ gem 'html-proofer', ">=1.6.0"
 
 gem 'slim'
 gem 'sass'
-gem 'bootstrap-sass'
+gem 'bootstrap-sass', require: false
 
 gem 'execjs'

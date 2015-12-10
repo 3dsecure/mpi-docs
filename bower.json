@@ -7,7 +7,6 @@
   "dependencies": {
     "jquery": "1.9",
     "modernizr": "2.6.2",
-    "bootstrap": "3",
     "jquery.tocify.js": "1.7.1"
   }
 }

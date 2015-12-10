@@ -35,6 +35,10 @@ You will get this response when you provide an invalid API key:
 HTTP/1.1 401 Not Authorized
 ````
 
+## Request format
+
+You can use URL-encoded (`application/x-www-form-urlencoded`) or JSON (`application/json`) content-types for POSTing data to our api endpoints. We support both of them.
+
 ## Response format
 Responses are in JSON format.
 
@@ -48,6 +52,78 @@ Number  Text
 500     Internal Server Error
 ````
 
+
+# 3DS Secure Flow
+
+  The goal is to verify that the customer is enrolled in a card authentication program and to create the authentication request message (PAReq) for enrolled cards. The enrollment check is shown in Steps 1 to 2; the authentication is shown in Steps 3 to 6.
+
+  1. To verify that the customer is enrolled in one of the card authentication programs, please use `/enrolled`
+  2. 3DSecure contacts the appropriate Directory Server for the card type and respond with "payer authentication request" (`pareq`) value defined in 
+  <a data-toc='Getenrollmentstatus'>here</a>
+
+  3. If the card is enrolled, you send the `pareq` message to the ACS URL (`acs_url`) of the card- issuing bank to request authentication.
+  4. The customer’s web browser displays the card-issuing bank’s authentication dialog box where the customer enters their password for the card.
+  5. The card-issuing bank replies to your system with a `PARes` message that contains the results of the authentication.
+  6. You verify that the signature is valid by calling `/check` with `pares` value.
+
+## Checking Enrollment
+  
+  To verify that the card is enrolled in a card authentication program, you should use `/enrolled` endpoint defined <a data-toc='Getenrollmentstatus'>here</a>. Afterwards you should intercept reply as:
+
+#### Enrolled Cards
+
+You receive `enrolled = 'Y'` if the customer’s card is enrolled in a payer authentication program:
+
+```
+  {
+      "acs_url":"https://secure5.arcot.com/acspage/cap?RID=35325&VAA=B",
+      "pareq":"<pareq value>",
+      "enrolled":"Y",
+      ...
+  }
+```
+
+#### Cards Not Enrolled
+    
+You receive `enrolled != 'Y'` in the following cases:
+
+* if the account number is not enrolled in a payer authentication program, you will get `enrolled = 'N'`
+
+* If 3ds authentication is not supported by the card type, you will get `enrolled = 'U'`
+
+
+## Authenticating Enrolled Cards
+
+When you have verified that a customer’s card is enrolled in a card authentication program, you must redirect the customer to the URL of the card-issuing bank’s Access Control Server (`acs_url`) by using an HTTP POST request web form that contains the `PAReq` data, the Termination URL (`TermURL`), and merchant data (`MD`).
+
+#### 1. Creating the HTTP POST Form
+
+```html
+<form action="<acs_url>" method="post">
+  <input type="hidden" name="PaReq" value="<pareq>" />
+  <input type="hidden" name="TermUrl" value="<term_url>" />
+  <input type="hidden" name="MD" value="<xid>" />
+</form>
+```
+You should replace `acs_url`, `term_url`, `pareq` and `xid` variable with appropiate values defined as:
+
+| Name | Value | Description |
+|:--------|:--------|---------|
+| acl_url | http url string | `acs_url` value from `/enrolled` response |
+| pareq | encoded string | `pareq` value from `/enrolled` response |
+| term_url | http url string |  Termination URL on a merchant's web site where the card-issuing bank posts the payer authentication response (PARes) message |
+| xid | string | Merchant-defined Data. We recommend you to use order number for the transaction. |
+
+This page typically includes JavaScript that automatically posts the form and should be implemented by merchant.
+
+#### 2. Receiving the PARes Message from the Card-Issuing Bank
+
+The card-issuing bank sends a PARes message to your TermURL in response to the PAReq data that you sent with the web form. The PARes message is sent by using an HTTP POST request and contains the result of the authentication you requested. 
+
+You must verify the signature and validity of PARes using `/check` endpoint as defined <a data-toc="CheckPARes">here</a>. 
+
+#### 3. Redirecting Customers to Pass or Fail Message Page
+After authentication check (`/check`) is completed, you can simply redirect the customer to a page containing a success or failure message. 
 
 # Examples
 
@@ -125,7 +201,7 @@ This method is used to verify if a given card is enrolled for 3-D Secure authent
 POST https://mpi.3dsecure.io/enrolled
 ````
 
-#### Parameters
+#### Request Parameters
 
 <dl class="dl-horizontal">
   <dt>amount</dt>
@@ -158,6 +234,28 @@ POST https://mpi.3dsecure.io/enrolled
 <b>Notice:</b> Getting the correct Acquirer BIN number and the Merchant ID from the acquiring bank is always a hassle the first time.
 </p>
 
+#### Response Parameters
+
+<dl class="dl-horizontal">
+  <dt>acs_url</dt>
+  <dd>[:valid_url:] <br> The URL of the Access Control Server of the card-issuing bank. This is where you must send the PAReq so that the customer can be authenticated. </dd>
+  <dt> pareq </dt>
+  <dd> [:base64:] <br> acronym for "Payer Authentication Request". It is digitally signed base64-encoded payer authentication request message,that a merchant sends to the card-issuing bank. Send this data without alteration or decoding. </dd>
+  <dt> enrolled </dt>
+  <dd> Y|N|U
+  <br> 3dSecure transaction type used for verifying whether a card is enrolled in the SecureCode or Verified by Visa service. This field can contain one of these values:
+    <ul> 
+     <li> Y: Authentication available. </li>
+     <li> N: Cardholder not participating. </li>
+     <li> U: Unable to authenticate regardless of the reason. </li>
+    </ul>
+  </dd>
+  <dt> eci </dt>
+  <dd> [0..7] <br> acronym for Electronic Commerce Indicator, defined in <a data-toc='Responsestatuscodes'>here</a> </dd>
+  <dt> error </dt>
+  <dd> [:print:]{1,500} <br> error message returned by card directories</dd>
+</dl>
+
 
 ### Check
 
@@ -167,7 +265,7 @@ This method is used to validate the PARes response from the ACS.
 POST https://mpi.3dsecure.io/check
 ````
 
-#### Parameters
+#### Request Parameters
 
 <dl class="dl-horizontal">
   <dt>pares</dt>
@@ -177,6 +275,44 @@ POST https://mpi.3dsecure.io/check
 <p class="alert alert-info">
 <b>Notice:</b> The ```pares``` should be url-encoded to garantee that valid base64 reaches the endpoint. For curl use ```--data-urlencode```.
 </p>
+
+#### Response Parameters
+
+<dl class='dl-horizontal'>
+  <dt> amount </dt>
+  <dd> [0-9]{1,11} <br> Amount in minor units of given currency (e.g. cents if in Euro). </dd>
+  <dt> currency </dt>
+  <dd> [A-Z]{3} <br> ISO 4217 3-letter currency code.</dd>
+
+  <dt> cavv </dt>
+  <dd> [:base64] <br> acronym for Cardholder Authentication Verification Value. A base64-encoded string sent back with Verified by Visa-enrolled cards that specifically identifies the transaction with the issuing bank and Visa. </dd>
+
+  <dt> cavv_algorithm </dt>
+  <dd> [1-9] <br> A one-digit reply passed back when the PARes status is a Y or an A. If your processor is ATOS, this must be passed in the authorization, if available. </dd>
+
+  <dt> eci </dt>
+  <dd> [0..7] <br> Electronic commerce indicator returned in the customer authentication reply defined <a data-toc='Responsestatuscodes'> here </a> </dd>
+
+  <dt> merchant_id </dt>
+  <dd> Identifier provided by your acquirer; used to log in to the ACS URL. </dd>
+
+  <dt> last4 </dt>
+  <dd> [\d]{4} <br> Customer’s masked account number.</dd>
+
+  <dt> status </dt>
+  <dd> Y|A|N|U <br> 
+    Result of the validation check, This field can contain one of these values: 
+    <ul>
+      <li> Y: Customer was successfully authenticated. </li>
+      <li> N: Customer failed or cancelled authentication. Transaction denied. </li>
+      <li> U: Authenticate not completed regardless of the reason. </li>
+      <li> A: Proof of authentication attempt was generated.</li>
+    </ul>
+  </dd>
+
+  <dt> xid </dt>
+  <dd> XID value returned in the customer authentication reply ( given in HTTP Form <a data-toc='AuthenticatingEnrolledCards'> at </a>) </dd>
+</dl>
 
 ## Response status codes
 
