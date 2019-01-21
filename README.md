@@ -5,26 +5,17 @@
 * [Ruby](https://www.ruby-lang.org/) for middleman
 * [NPM](https://npmjs.org) and [Bower](http://bower.io) for JavaScript dependencies
 
-### Install Node and npm
 
-```
-apt-get install nodejs npm
-```
-or
-```
-brew install node
-```
+### Installation
 
-### Install bower
+```bash
+git clone https://github.com/clearhaus/gateway-api-docs.git  
 
-```
-npm install -g bower
+docker build -t mpi-api-docs .
 ```
 
-## Run middleman
-
+## Development
+```bash
+docker run --rm -it -p 4567:4567 -v :/web mpi-api-docs
 ```
-bundle install
-bower install
-bundle exec middleman server
-```
+Browse to http://localhost:4567
