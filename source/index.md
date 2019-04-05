@@ -14,7 +14,6 @@ The API key is what you pay for so keep it secret.
 
 ````
 https://mpi.3dsecure.io      # live accounts
-https://mpi.test.3dsecure.io # test accounts
 ````
 
 
@@ -190,9 +189,6 @@ POST https://mpi.3dsecure.io/check
 | 7 | 1 | Authentication Could Not Be Performed |
 | 7 | 0 | Error |
 
-## Test card numbers
-
-Not available yet.
 
 [3-D_Secure]: http://en.wikipedia.org/wiki/3-D_Secure
 [Tokenization]: http://en.wikipedia.org/wiki/Tokenization_(data_security)
