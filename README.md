@@ -9,7 +9,7 @@
 ### Installation
 
 ```bash
-git clone https://github.com/clearhaus/gateway-api-docs.git  
+git clone https://github.com/3dsecure/mpi-docs.git
 
 docker build -t mpi-api-docs .
 ```
