@@ -19,3 +19,7 @@ docker build -t mpi-api-docs .
 docker run --rm -it -p 4567:4567 -v :/web mpi-api-docs
 ```
 Browse to http://localhost:4567
+
+## Deployment
+Using CircleCi for automatically deploying to s3 bucket.
+The deployment will start once a branch is merged onto master.
