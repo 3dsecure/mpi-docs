@@ -33,5 +33,5 @@ jobs:
             else
               echo "Not master branch, dry run only"
               aws s3 sync $BUILD_DIR \
-              s3:/clrhs-prod-nonpci-docs-3dsecure-io/ --dryrun --delete
+              s3://clrhs-prod-nonpci-docs-3dsecure-io/ --dryrun --delete
             fi
