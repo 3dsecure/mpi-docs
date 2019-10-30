@@ -134,7 +134,7 @@ GEM
     mini_portile2 (2.4.0)
     minitest (5.11.3)
     multi_json (1.13.1)
-    nokogiri (1.10.3)
+    nokogiri (1.10.4)
       mini_portile2 (~> 2.4.0)
     padrino-helpers (0.13.3.4)
       i18n (~> 0.6, >= 0.6.7)
@@ -195,7 +195,7 @@ DEPENDENCIES
   middleman (>= 3.3.7)
   middleman-livereload
   middleman-s3_sync
-  middleman-sprockets
+  middleman-sprockets (>= 3.4.1)
   middleman-syntax
   redcarpet (>= 3.2.2)
   sass
