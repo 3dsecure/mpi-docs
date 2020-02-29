@@ -148,7 +148,7 @@ GEM
     rack-livereload (0.3.17)
       rack
     rainbow (3.0.0)
-    rake (12.3.2)
+    rake (13.0.1)
     rb-fsevent (0.10.3)
     rb-inotify (0.10.0)
       ffi (~> 1.0)
@@ -195,7 +195,7 @@ DEPENDENCIES
   middleman (>= 3.3.7)
   middleman-livereload
   middleman-s3_sync
-  middleman-sprockets
+  middleman-sprockets (>= 3.4.1)
   middleman-syntax
   redcarpet (>= 3.2.2)
   sass
