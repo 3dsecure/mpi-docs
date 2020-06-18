@@ -13,6 +13,10 @@ end
 
 activate :livereload
 
+activate :directory_indexes
+
+page '/index.html', :layout => "layout-menu"
+
 set :markdown_engine, :redcarpet
 
 set :markdown,

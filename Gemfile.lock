@@ -195,7 +195,7 @@ DEPENDENCIES
   middleman (>= 3.3.7)
   middleman-livereload
   middleman-s3_sync
-  middleman-sprockets
+  middleman-sprockets (>= 3.4.1)
   middleman-syntax
   redcarpet (>= 3.2.2)
   sass

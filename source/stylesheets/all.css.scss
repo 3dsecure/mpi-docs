@@ -2,6 +2,7 @@
 
 body {
   color: #444;
+  font-family: Montserrat, sans-serif;
 }
 
 pre {
@@ -65,9 +66,6 @@ section#header {
   color: #fff;
 }
 
-section#doc-content {
-}
-
 #doc-content h1 {
   margin-top: 90px;
   font-weight: bold;
@@ -119,8 +117,81 @@ pre code.highlight {
   background-color: transparent;
 }
 
+html, body, #homepage {
+  height: 100%;
+}
+
+#homepage {
+  background-color: #363E42;
+}
+
+#homepage .boxes {
+  display: flex;
+  justify-content: center;
+  margin-top: 20%;
+}
+
+#homepage .box {
+  width: 400px;
+  height: 200px;
+  box-shadow: rgba(73, 145, 126, 0.2) 0px 0px 15px 0px;
+  border-radius: 16px;
+  padding: 40px 30px;
+  margin: 20px;
+  transition: all 300ms linear;
+  top: 40%;
+}
+#homepage a {
+  text-decoration: none;
+  color: white;
+}
+
+#homepage .box:hover {
+  transform: scale(1.1);
+  box-shadow: rgba(73, 145, 126, 0.3) 2px 2px 20px 2px;
+}
+
+#homepage h2 {
+  font-weight: 500;
+}
+
+#homepage p {
+  font-weight: 300;
+}
+
+#homepage span {
+  color: rgba(0, 0, 0, 0.4);
+  text-transform: uppercase;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+#v1 {
+  background: linear-gradient(35deg, #41916C 0%, #388361 100%);;
+  opacity: 0.8;
+  
+}
+
+#v2 {
+  background: linear-gradient(35deg, #5E9E9B 0%, #418482 100%);;
+}
+
 @media (max-width: 992px) {
   #toc {
     display: none;
+  }
+  #homepage .boxes {
+    flex-direction: column;
+    align-content: center;
+    margin-top: 20px;
+  }
+  #homepage .box {
+    margin: 20px auto;
+    width: 80%;
+    height: auto;
+  }
+
+  #homepage .box:hover {
+    transform: scale(1);
   }
 }
