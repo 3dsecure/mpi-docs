@@ -1,0 +1,36 @@
+doctype html
+html
+  head
+    title= current_page.data.title || ""
+    script src="/javascripts/vendor/modernizr.js"
+    meta name="description" content=""
+    meta name="viewport" content="width=device-width, initial-scale=1"
+
+    /[if lt IE 9]
+    script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.2/html5shiv.js"
+
+    = stylesheet_link_tag "all", media: "all"
+    = stylesheet_link_tag "syntax"
+    = stylesheet_link_tag "jquery.tocify.css"
+    = stylesheet_link_tag "//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css"
+    = stylesheet_link_tag "http://fonts.googleapis.com/css?family=Raleway"
+    = stylesheet_link_tag "http://fonts.googleapis.com/css?family=Merriweather"
+
+  body
+    section#homepage
+        .row
+          .col-md-2
+          .col-md-8
+            div.boxes
+              a href="/3dsv2"
+                div.box#v2
+                  span Newest version
+                  h2 3DSS Docs
+                  p Documentation for EMVCo 3-D Secure Server
+              a href="/3dsv1"
+                div.box#v1
+                  span Previous version
+                  h2 MPI Docs
+                  p MPI Documentation for 3-D Secure 1
+          .col-md-2
+    = javascript_include_tag 'all'
