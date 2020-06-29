@@ -29,9 +29,9 @@ jobs:
             if [ "${CIRCLE_BRANCH}" = "master" ]; then
               echo "On master branch, syncing to s3"
               aws s3 sync $BUILD_DIR \
-              s3://clrhs-prod-nonpci-docs-3dsecure-io/ --delete
+              s3://clrhs-prod-nonpci-docs-3dsecure-io/ --delete --exclude "3dsv2/*"
             else
               echo "Not master branch, dry run only"
               aws s3 sync $BUILD_DIR \
-              s3://clrhs-prod-nonpci-docs-3dsecure-io/ --dryrun --delete
+              s3://clrhs-prod-nonpci-docs-3dsecure-io/ --dryrun --delete --exclude "3dsv2/*"
             fi
