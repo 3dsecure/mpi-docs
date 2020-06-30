@@ -30,6 +30,7 @@ jobs:
               echo "On master branch, syncing to s3"
               aws s3 sync $BUILD_DIR \
               s3://clrhs-prod-nonpci-docs-3dsecure-io/ --delete --exclude "3dsv2/*"
+              aws cloudfront create-invalidation --distribution-id E7TJBG3FUU0TD --paths "/*"
             else
               echo "Not master branch, dry run only"
               aws s3 sync $BUILD_DIR \
