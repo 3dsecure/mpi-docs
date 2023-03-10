@@ -1,3 +1,7 @@
+**Retired, because the MPI has been retired.**
+
+---
+
 # Source for 3dsecure.io MPI Docs
 
 ## Dependencies
